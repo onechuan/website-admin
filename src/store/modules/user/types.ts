@@ -1,3 +1,1 @@
-export type TRole = "" | "*" | "admin" | "user"
-
-export 
+export type TRole = '' | '*' | 'admin' | 'user';
