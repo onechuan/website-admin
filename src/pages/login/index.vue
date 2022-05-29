@@ -1,37 +1,92 @@
 <template>
   <div class="login-container">
     <div class="header">一码平川管理系统</div>
-    <div class="wrap">
-      <form>
-        <div class="form-item">
-          <label for="email">email: </label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            placeholder="Please input your email!"
-            required
-          />
-        </div>
-        <div class="form-item">
-          <label for="password">password: </label>
-          <input
-            id="password"
+    <div class="form-wrap">
+      <h2 class="title">登录</h2>
+      <el-form
+        ref="userFormRef"
+        :model="userForm"
+        :rules="userRules"
+        label-width="20px"
+      >
+        <el-form-item label="email" prop="email">
+          <el-input v-model="userForm.email" />
+        </el-form-item>
+        <el-form-item label="password" prop="password">
+          <el-input
+            v-model="userForm.password"
             type="password"
-            name="password"
-            placeholder="Please input your password!"
-            required
+            autocomplete="off"
           />
-        </div>
-        <div class="form-item">
-          <input class="submit-btn" type="submit" value="提交" />
-        </div>
-      </form>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleSubmit(userFormRef)"
+            >Login In</el-button
+          >
+          <el-button @click="handleReset(userFormRef)">Reset</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script lang="ts" setup>
+  import { reactive, ref } from 'vue';
+  import { ElMessage, FormInstance, FormRules } from 'element-plus';
+  import useLoading from '@/hooks/useLoading';
+  import { useUserStore } from '@/store';
+  import {useRouter} from 'vue-router';
+
+  const { setLoading } = useLoading();
+  const userStore = useUserStore();
+  const router = useRouter();
+
+  const userFormRef = ref<FormInstance>();
+
+  const userForm = reactive({
+    email: '',
+    password: '',
+  });
+
+  const userRules = reactive<FormRules>({
+    email: [
+      { required: true, message: 'Please Input Your Email.', trigger: 'blur' },
+      { min: 8, max: 30, message: 'Length should be 8 to 30', trigger: 'blur' },
+    ],
+    password: [
+      {
+        required: true,
+        message: 'Please Input Your Password.',
+        trigger: 'blur',
+      },
+      { min: 8, max: 30, message: 'Length should be 6 to 30', trigger: 'blur' },
+    ],
+  });
+
+  async function handleSubmit(formEl: FormInstance | undefined) {
+    if (!formEl) return;
+    const isValidated = await formEl.validate((valid) => valid);
+    if (!isValidated) {
+      ElMessage.error('email or password is invalid');
+      return;
+    }
+    setLoading(true);
+    try {
+      await userStore.login(userForm);
+      router.push('/');
+      ElMessage.success('login is success!');
+    } catch (err) {
+      ElMessage.error(err.msg || 'login is faild');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleReset(formEl: FormInstance | undefined) {
+    if (!formEl) return;
+    formEl.resetFields();
+  }
+</script>
 
 <style lang="scss" scoped>
   .login-container {
@@ -52,7 +107,7 @@
       padding: 20px;
       box-sizing: border-box;
     }
-    .wrap {
+    .form-wrap {
       width: 400px;
       height: 250px;
       border-radius: 10px;
@@ -62,42 +117,18 @@
       top: 50%;
       transform: translate(-50%, -50%);
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        .form-item {
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          padding: 10px 20px;
-          label {
-            color: #888;
-            font-size: 15px;
-          }
-          input {
-            color: #fff;
-            padding: 10px;
-            width: 200px;
-            background-color: transparent;
-            border: none;
-            border-bottom: 1px solid #888;
-            outline: none;
-          }
-          input:hover{
-            border-bottom: 1px solid yellowgreen;
-          }
-          .submit-btn {
-            margin: 0 auto;
-            width: 100px;
-            height: 40px;
-          }
-          .submit-btn:hover{
-            cursor: pointer;
-            color: yellowgreen;
-            border-bottom: 1px solid yellowgreen;
+      flex-direction: column;
+      .title {
+        color: #fff;
+        padding: 20px 0;
+      }
+      .el-form {
+        .el-form-item {
+          width: 250px;
+          .el-button {
+            flex: 1;
           }
         }
       }
