@@ -30,8 +30,8 @@
 </template>
 
 <script lang="ts" setup>
-  import { useRouter } from "vue-router";
-  import { User, Expand, Fold, Grid, Plus } from '@element-plus/icons-vue';
+  import { useRouter } from 'vue-router';
+  import { User, Expand, Fold, Grid } from '@element-plus/icons-vue';
 
   const router = useRouter();
 
