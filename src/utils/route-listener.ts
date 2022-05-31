@@ -11,6 +11,7 @@ const key = Symbol('ROUTE_CHANGE');
 
 let latestRoute: RouteLocationNormalized;
 
+// 告知路由改变了
 export function setRouteEmitter(to: RouteLocationNormalized) {
   emitter.emit(key, to);
   latestRoute = to;

@@ -6,5 +6,6 @@ import pinia from './store';
 
 import './assets/css/reset.css';
 import 'element-plus/dist/index.css';
+import './assets/css/global.scss';
 
 createApp(App).use(router).use(pinia).use(ElementPlus).mount('#app');

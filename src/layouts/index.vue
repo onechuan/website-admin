@@ -12,7 +12,7 @@
           />
         </el-aside>
         <el-main>
-          <router-view />
+          <page-layout />
         </el-main>
       </el-container>
     </el-container>
@@ -21,8 +21,9 @@
 
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import Menu from '../menu/index.vue';
-  import Header from '../header/index.vue';
+  import Menu from './menu/index.vue';
+  import Header from './header/index.vue';
+  import PageLayout from './page-layout.vue';
 
   const isExpand = ref(true);
 

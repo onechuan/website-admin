@@ -64,7 +64,11 @@ module.exports = {
     'prefer-regex-literals': 0,
     'import/no-extraneous-dependencies': 0,
     // 用于关闭for循环中++的问题
-    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "vue/v-on-event-hyphenation": ["error", "never", {
+      "autofix": false,
+      "ignore": []
+    }]
   },
   
 };

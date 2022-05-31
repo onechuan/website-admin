@@ -35,7 +35,7 @@
   import { ElMessage, FormInstance, FormRules } from 'element-plus';
   import useLoading from '@/hooks/useLoading';
   import { useUserStore } from '@/store';
-  import {useRouter} from 'vue-router';
+  import { useRouter } from 'vue-router';
 
   const { setLoading } = useLoading();
   const userStore = useUserStore();
@@ -73,7 +73,17 @@
     setLoading(true);
     try {
       await userStore.login(userForm);
-      router.push('/');
+      console.log("Ssssss");
+      
+      const { redirect, ...othersQuery } = router.currentRoute.value.query;
+      console.log("ssss",redirect, othersQuery);
+      
+      router.push({
+        name: (redirect as string) || 'Workplace',
+        query: {
+          ...othersQuery,
+        },
+      });
       ElMessage.success('login is success!');
     } catch (err) {
       ElMessage.error(err.msg || 'login is faild');
