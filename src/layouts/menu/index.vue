@@ -2,15 +2,15 @@
   <el-menu
     default-active="2"
     class="el-menu-main"
-    :class="{ 'el-menu-main--expand': isExpand }"
-    :collapse="!isExpand"
+    :class="{ 'el-menu-main--expand': !collapsed }"
+    :collapse="collapsed"
     :collapse-transition="false"
     @open="handleOpen"
     @close="handleClose"
   >
     <div class="expand-btn" index="0" @click="onClickExpand">
-      <el-icon v-if="isExpand"><Fold /></el-icon>
-      <el-icon v-else><Expand /></el-icon>
+      <el-icon v-if="collapsed"><Expand /></el-icon>
+      <el-icon v-else><Fold /></el-icon>
     </div>
     <sub-menu
       v-for="menuItem in menuTree"
@@ -91,15 +91,18 @@
     return travel(cloneRoutes, 0);
   });
 
-  console.log('menuTree', menuTree);
 
   defineProps({
-    isExpand: {
+    collapsed: {
       type: Boolean,
       default: false,
     },
+    menuWidth:{
+      type: Number,
+      default: 0
+    }
   });
-  const emit = defineEmits(['changeExpandStatus']);
+  const emit = defineEmits(['setCollapsed']);
 
   const handleOpen = (key: string, keyPath: string[]) => {
     console.log(key, keyPath);
@@ -109,7 +112,7 @@
   };
 
   function onClickExpand() {
-    emit('changeExpandStatus');
+    emit('setCollapsed');
   }
 
   function onClickMenuItem(route: string) {

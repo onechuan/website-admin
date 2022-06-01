@@ -5,10 +5,11 @@
         <Header />
       </el-header>
       <el-container>
-        <el-aside :class="{ 'el-aside--expand': isExpand }">
+        <el-aside v-if="renderMenu" v-show="!hideMenu" width="`${menuWidth}px`">
           <Menu
-            :is-expand="isExpand"
-            @changeExpandStatus="changeExpandStatus"
+            :collapsed="!collapsed"
+            :menu-width="menuWidth"
+            @setCollapsed="setCollapsed"
           />
         </el-aside>
         <el-container>
@@ -32,15 +33,33 @@
   import PageLayout from './page-layout.vue';
   import TabBar from './tab-bar/index.vue';
 
-  const isExpand = ref(true);
   const appStore = useAppStore();
   const offsetTop = computed(() => {
     return appStore.navbar ? 32 : 0;
   });
 
-  function changeExpandStatus() {
-    isExpand.value = !isExpand.value;
+  const collapsed = computed(() => {
+    return appStore.menuCollapse;
+  });
+  function setCollapsed() {
+    appStore.updateSettings({ menuCollapse: !collapsed.value });
   }
+
+  const navbarHeight = `60px`;
+  const navbar = computed(() => appStore.navbar);
+  const renderMenu = computed(() => appStore.menu);
+  const hideMenu = computed(() => appStore.hideMenu);
+  const menuWidth = computed(() => {
+    return appStore.menuCollapse ? 48 : appStore.menuWidth;
+  });
+  const paddingStyle = computed(() => {
+    const paddingLeft =
+      renderMenu.value && !hideMenu.value
+        ? { paddingLeft: `${menuWidth.value}px` }
+        : {};
+    const paddingTop = navbar.value ? { paddingTop: navbarHeight } : {};
+    return { ...paddingLeft, ...paddingTop };
+  });
 </script>
 
 <style lang="scss" scoped>
@@ -61,11 +80,7 @@
     }
     .el-aside {
       margin-top: 1px;
-      width: 60px;
       border-right: 1px solid #ccc;
-      &--expand {
-        width: 200px;
-      }
     }
     .main-content {
       margin-top: 1px;
