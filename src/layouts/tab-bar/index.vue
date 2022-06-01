@@ -1,63 +1,50 @@
 <template>
   <div class="tab-bar-container">
-    <el-affix :offset="offsetTop">
-      <div class="tab-bar-box">
-        <div class="tab-bar-scroll">
-          <div class="tags-wrap">
-            <el-tag
-              v-for="(tag, index) in tagList"
-              :key="tag.fullPath"
-              :closable="index !== 0"
-              @click="goto(tag)"
-              @close="tagClose(tag, index)"
-              >{{ $t(tag.title) }}</el-tag
-            >
-          </div>
+    <div class="tab-bar-box">
+      <div class="tab-bar-scroll">
+        <div class="tags-wrap">
+          <el-tag
+            v-for="(tag, index) in tagList"
+            :key="tag.fullPath"
+            :closable="index !== 0"
+            @click="goto(tag)"
+            @close="tagClose(tag, index)"
+            >{{ $t(tag.title) }}</el-tag
+          >
         </div>
-        <div class="tag-bar-operation"></div>
       </div>
-    </el-affix>
+      <div class="tag-bar-operation"></div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, watch } from 'vue';
-  import { ElAffix } from 'element-plus';
-  import { useAppStore, useTabBarStore } from '@/store';
+  import { computed } from 'vue';
+  import { useTabBarStore } from '@/store';
   import { RouteLocationNormalized, useRouter } from 'vue-router';
   import { ITagProps } from '@/store/types';
   import { listenerRouteChange } from '@/utils/route-listener';
 
-  const appStore = useAppStore();
   const tabBarStore = useTabBarStore();
   const router = useRouter();
-  const affixRef = ref();
 
   const tagList = computed(() => {
     return tabBarStore.getTabList;
   });
 
-  const offsetTop = computed(() => {
-    return appStore.navbar ? 61 : 0;
-  });
-
-  watch(
-    () => appStore.navbar,
-    () => {
-      affixRef.value.update();
-    }
-  );
-
-  listenerRouteChange((route: RouteLocationNormalized)=>{
+  listenerRouteChange((route: RouteLocationNormalized) => {
     if (
       !route.meta.noAffix &&
       !tagList.value.some((tag) => tag.fullPath === route.fullPath)
     ) {
+      console.log("update",route);
       tabBarStore.updateTabList(route);
     }
   }, true);
 
   function tagClose(tag: ITagProps, idx: number) {
+    console.log("delete",tag,idx);
+    
     tabBarStore.deleteTag(idx, tag);
     if (idx === tagList.value.length) {
       const latest = tagList.value[tagList.value.length - 1];

@@ -40,7 +40,7 @@ const useTabBarStore = defineStore('tabBar', {
       }
     },
     deleteTag(index: number, tag: ITagProps) {
-      this.tabList.splice(index, 1);
+      this.tagList.splice(index, 1);
       this.cacheTabList.delete(tag.name);
     },
   },

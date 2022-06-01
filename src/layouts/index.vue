@@ -65,7 +65,7 @@
 <style lang="scss" scoped>
   .common-layout {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     .el-header {
       margin: 0;
       padding: 0;
@@ -74,7 +74,7 @@
       margin-top: 1px;
     }
     .el-main {
-      height: calc(100vh - 61px);
+      height: calc(100vh - 93px);
       overflow-y: scroll;
       background-color: rgba(229, 230, 235, 0.3);
     }
