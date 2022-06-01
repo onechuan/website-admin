@@ -7,10 +7,10 @@
             <el-tag
               v-for="(tag, index) in tagList"
               :key="tag.fullPath"
-              closable
+              :closable="index !== 0"
               @click="goto(tag)"
               @close="tagClose(tag, index)"
-              >{{ tag.title }}</el-tag
+              >{{ $t(tag.title) }}</el-tag
             >
           </div>
         </div>
@@ -21,22 +21,40 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { ElAffix } from 'element-plus';
   import { useAppStore, useTabBarStore } from '@/store';
-  import { useRouter } from 'vue-router';
+  import { RouteLocationNormalized, useRouter } from 'vue-router';
   import { ITagProps } from '@/store/types';
+  import { listenerRouteChange } from '@/utils/route-listener';
 
   const appStore = useAppStore();
   const tabBarStore = useTabBarStore();
   const router = useRouter();
+  const affixRef = ref();
 
   const tagList = computed(() => {
     return tabBarStore.getTabList;
   });
 
   const offsetTop = computed(() => {
-    return appStore.navbar ? 60 : 0;
+    return appStore.navbar ? 61 : 0;
+  });
+
+  watch(
+    () => appStore.navbar,
+    () => {
+      affixRef.value.update();
+    }
+  );
+
+  listenerRouteChange((route: RouteLocationNormalized)=>{
+    if (
+      !route.meta.noAffix &&
+      !tagList.value.some((tag) => tag.fullPath === route.fullPath)
+    ) {
+      tabBarStore.updateTabList(route);
+    }
   });
 
   function tagClose(tag: ITagProps, idx: number) {
@@ -55,12 +73,12 @@
 <style lang="scss" setup>
   .tab-bar-container {
     position: relative;
-    background-color: $color-bg-2;
+    background-color: var(--color-bg-2);
     .tab-bar-box {
       display: flex;
       padding: 0 0 0 20px;
-      background-color: $color-bg-2;
-      border-bottom: 1px solid $color-border;
+      background-color: var(--color-bg-2);
+      border-bottom: 1px solid var(--color-border);
       .tab-bar-scroll {
         height: 32px;
         flex: 1;
@@ -70,15 +88,8 @@
           height: 42px;
           white-space: nowrap;
           overflow-x: auto;
-
-          :deep(.oc-tag) {
-            margin-right: 6px;
+          .el-tag {
             cursor: pointer;
-            &:first-child {
-              .oc-tag-close-btn {
-                display: none;
-              }
-            }
           }
         }
       }
@@ -91,21 +102,21 @@
   }
 
   .tag-link {
-    color: $color-text-2;
+    color: var(--color-text-2);
     text-decoration: none;
   }
   .link-activated {
-    color: $link-6;
+    color: var(--link-6);
     .tag-link {
-      color: $link-6;
+      color: var(--link-6);
     }
     & + .oc-tag-close-btn {
-      color: $link-6;
+      color: var(--link-6);
     }
   }
   :deep(.oc-affix) {
     z-index: 90;
-    background-color: $color-bg-2;
+    background-color: var(--color-bg-2);
     overflow-x: auto;
   }
 </style>

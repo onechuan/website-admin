@@ -26,7 +26,7 @@ const useTabBarStore = defineStore('tabBar', {
   }),
   getters: {
     getTabList(): ITagProps[] {
-      return this.tabList;
+      return this.tagList;
     },
     getCacheList(): string[] {
       return Array.from(this.cacheTabList);

@@ -1,9 +1,11 @@
 <template>
-  <div class="header">
-    <Breadcrumb :breadcrumbs="breadcrumbs" />
-    <el-button type="primary" @click="onClickAddUser">新增用户</el-button>
+  <div class="user-info">
+    <div class="header">
+      <Breadcrumb :breadcrumbs="breadcrumbs" />
+      <el-button type="primary" @click="onClickAddUser">新增用户</el-button>
+    </div>
+    <div class="main"></div>
   </div>
-  
 </template>
 
 <script lang="ts" setup>
@@ -54,6 +56,7 @@
   .main {
     margin-top: 20px;
     width: 100%;
+    height: 2000px;
     box-sizing: border-box;
   }
 </style>
