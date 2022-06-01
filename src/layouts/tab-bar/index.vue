@@ -55,7 +55,7 @@
     ) {
       tabBarStore.updateTabList(route);
     }
-  });
+  }, true);
 
   function tagClose(tag: ITagProps, idx: number) {
     tabBarStore.deleteTag(idx, tag);
@@ -90,6 +90,7 @@
           overflow-x: auto;
           .el-tag {
             cursor: pointer;
+            margin-right: 5px;
           }
         }
       }

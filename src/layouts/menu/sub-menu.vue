@@ -5,7 +5,7 @@
   >
     <template #title>
       <el-icon><user /></el-icon>
-      <span>{{ menuTree.name }}</span>
+      <span>{{ $t( menuTree?.meta.locale ) }}</span>
     </template>
     <sub-menu
       v-for="menuItem in menuTree?.children"
@@ -19,7 +19,7 @@
     @click="goto(menuTree)"
   >
     <el-icon><user /></el-icon>
-    <span>{{ menuTree.name }}</span> 
+    <span>{{ $t( menuTree?.meta.locale ) }}</span> 
   </el-menu-item>
 </template>
 
