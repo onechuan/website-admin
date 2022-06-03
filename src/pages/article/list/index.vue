@@ -1,7 +1,7 @@
 <template>
-    <div>
-list
-    </div>
+  <div>
+
+  </div>
 </template>
 
 <script setup>

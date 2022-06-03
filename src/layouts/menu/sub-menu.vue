@@ -5,7 +5,7 @@
   >
     <template #title>
       <el-icon><user /></el-icon>
-      <span>{{ $t( menuTree?.meta.locale ) }}</span>
+      <span>{{ $t(menuTree?.meta.locale) }}</span>
     </template>
     <sub-menu
       v-for="menuItem in menuTree?.children"
@@ -15,11 +15,11 @@
   </el-sub-menu>
   <el-menu-item
     v-else
-    :index="(menuTree.meta.order?.toString() as string)"
+    :index="(menuTree.name as string)"
     @click="goto(menuTree)"
   >
     <el-icon><user /></el-icon>
-    <span>{{ $t( menuTree?.meta.locale ) }}</span> 
+    <span>{{ $t(menuTree?.meta.locale) }}</span>
   </el-menu-item>
 </template>
 
@@ -27,7 +27,7 @@
   import { RouteRecordRaw, useRouter } from 'vue-router';
   import { User } from '@element-plus/icons-vue';
 
-  const router = useRouter()
+  const router = useRouter();
 
   defineProps<{
     menuTree: RouteRecordRaw;
@@ -37,7 +37,7 @@
     router.push({
       name: item.name,
     });
-  };
+  }
 </script>
 
 <style lang="scss" scoped></style>
