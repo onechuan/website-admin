@@ -14,7 +14,7 @@
       </div>
       <md-editor v-model="articleForm.content" class="editor" />
       <el-drawer v-model="drawer" title="发布文章" @close="handleCloseDrawer">
-        <el-form-item label="分类" >
+        <el-form-item label="分类">
           <el-select
             v-model="articleForm.category"
             placeholder="please select your zone"
@@ -44,7 +44,7 @@
         <el-form-item label="封面">
           <el-upload
             class="cover-uploader"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="http://127.0.0.1:3001/api/v1/upload/single/"
             :show-file-list="false"
             :on-success="handleCoverSuccess"
             :before-upload="beforeCoverUpload"
@@ -73,9 +73,7 @@
         </el-form-item>
         <el-form-item class="btn-group">
           <el-button @click="handleCloseDrawer">取消</el-button>
-          <el-button type="primary" @click="handleSubmit(articleFormRef)"
-            >确认并发布</el-button
-          >
+          <el-button type="primary" @click="handleSubmit">确认并发布</el-button>
         </el-form-item>
       </el-drawer>
     </el-form>
@@ -94,6 +92,7 @@
     UploadProps,
   } from 'element-plus';
   import { Plus } from '@element-plus/icons-vue';
+  import { fetchAddArticle } from '@/api/article';
 
   const articleFormRef = ref();
 
@@ -150,7 +149,9 @@
     response,
     uploadFile
   ) => {
-    imageUrl.value = URL.createObjectURL(uploadFile.raw!);
+    console.log("uploadFile",uploadFile.response.data.fileUrl);
+    
+    articleForm.cover = uploadFile.response.data.fileUrl;
   };
 
   const beforeCoverUpload: UploadProps['beforeUpload'] = (rawFile) => {
@@ -161,7 +162,7 @@
     return true;
   };
 
-  async function handleSubmit(formEl: FormInstance | undefined) {
+  async function handleSubmit() {
     if (!articleForm.title.trim()) {
       ElMessage.error('文章标题不能为空！');
       return;
@@ -187,15 +188,12 @@
       ElMessage.error('文章简介不能为空！');
       return;
     }
-
-    if (!formEl) return;
-    await formEl.validate((valid, fields) => {
-      if (valid) {
-        console.log('submit!');
-      } else {
-        console.log('error submit!', fields);
-      }
-    });
+    const addArticleParams = {
+      ...articleForm,
+      author: '',
+    };
+    const res = await fetchAddArticle(addArticleParams);
+    ElMessage.success(res.data.msg);
   }
 </script>
 
@@ -231,7 +229,7 @@
   }
 
   .cover-uploader {
-    &.cover {
+    .cover {
       width: 178px;
       height: 178px;
       display: block;
