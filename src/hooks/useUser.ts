@@ -1,5 +1,5 @@
 import { useRouter } from 'vue-router';
-import {ElMessage} from "element-plus"
+import { ElMessage } from "element-plus"
 
 import { useUserStore } from '@/store';
 
