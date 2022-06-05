@@ -14,7 +14,7 @@ export default function usePermission() {
       );
     },
     // 获取首个通过的路由
-    findFirstPermissionRoute(_routers: any, role = "1") {
+    findFirstPermissionRoute(_routers: any, role = '1') {
       const cloneRouters = [..._routers];
       // 遍历循环获取到被通过的路由
       while (cloneRouters.length) {

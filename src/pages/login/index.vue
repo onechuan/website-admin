@@ -47,7 +47,6 @@
     email: '',
     password: '',
   });
-
   const userRules = reactive<FormRules>({
     email: [
       { required: true, message: 'Please Input Your Email.', trigger: 'blur' },
@@ -73,11 +72,11 @@
     setLoading(true);
     try {
       await userStore.login(userForm);
-      console.log("Ssssss");
-      
+      console.log('Ssssss');
+
       const { redirect, ...othersQuery } = router.currentRoute.value.query;
-      console.log("ssss",redirect, othersQuery);
-      
+      console.log('ssss', redirect, othersQuery);
+
       router.push({
         name: (redirect as string) || 'Workplace',
         query: {

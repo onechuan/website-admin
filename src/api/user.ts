@@ -2,7 +2,7 @@ import { IUserState } from '@/store/modules/user/types';
 import http from '@/utils/http';
 import { RouteRecordNormalized } from 'vue-router';
 
-const { post, get } = http;
+const { post } = http;
 
 export interface ILoginParams {
   email: string;
@@ -21,10 +21,10 @@ export function fetchLogout() {
   return post<ILoginRes>('/api/v1/user/logout');
 }
 
-export function fetchUserInfo(){
+export function fetchUserInfo() {
   return post<IUserState>('/api/v1/user/info');
 }
 
-export function fetchMenuList(){
+export function fetchMenuList() {
   return post<RouteRecordNormalized[]>('/api/v1/user/menu');
 }

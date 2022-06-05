@@ -10,7 +10,8 @@ export interface HttpResponse<T = unknown> {
 }
 
 const instance = axios.create({
-  baseURL: 'https://www.fastmock.site/mock/529b7481979b1b6705e49a40a9d65be5/blog',
+  baseURL:
+    'https://www.fastmock.site/mock/529b7481979b1b6705e49a40a9d65be5/blog',
   timeout: 5000,
 });
 

@@ -27,5 +27,4 @@ Object.keys(modules).forEach((key) => {
 //     })
 //   }
 
-
 export default appRoutes;

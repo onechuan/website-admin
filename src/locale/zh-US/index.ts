@@ -4,7 +4,6 @@ import localeUserSetting from '@/pages/setting/locale/zh-CN';
 import localeArticle from '@/pages/article/list/locale/zh-CN';
 import localeArticleAdd from '@/pages/article/add/locale/zh-CN';
 
-
 import localeSettings from './settings';
 
 export default {
