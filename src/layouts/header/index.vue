@@ -58,10 +58,10 @@
 
   import { useUserStore } from '@/store';
   import { ElMessage } from 'element-plus';
-  import {useRouter} from "vue-router"
+  import { useRouter } from 'vue-router';
 
   const userStore = useUserStore();
-  const router = useRouter()
+  const router = useRouter();
   // 退出登录
   function handleLogout() {
     userStore.logout();

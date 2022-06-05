@@ -91,16 +91,15 @@
     return travel(cloneRoutes, 0);
   });
 
-
   defineProps({
     collapsed: {
       type: Boolean,
       default: false,
     },
-    menuWidth:{
+    menuWidth: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   });
   const emit = defineEmits(['setCollapsed']);
 

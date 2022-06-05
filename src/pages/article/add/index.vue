@@ -149,8 +149,8 @@
     response,
     uploadFile
   ) => {
-    console.log("uploadFile",uploadFile.response.data.fileUrl);
-    
+    console.log('uploadFile', uploadFile.response.data.fileUrl);
+
     articleForm.cover = uploadFile.response.data.fileUrl;
   };
 

@@ -28,10 +28,10 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
 
-  import {tableHeadList} from "./setting"
+  import { tableHeadList } from './setting';
 
   const visible = ref(false);
-  
+
   const tableData = [
     {
       date: '2016-05-03',
@@ -56,6 +56,6 @@
   ];
   function handleHeadClick(column, event) {
     console.log('column, event', column, event);
-    if(column.label === "Date") visible.value = true;
+    if (column.label === 'Date') visible.value = true;
   }
 </script>

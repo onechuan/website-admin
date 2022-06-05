@@ -37,14 +37,14 @@
       !route.meta.noAffix &&
       !tagList.value.some((tag) => tag.fullPath === route.fullPath)
     ) {
-      console.log("update",route);
+      console.log('update', route);
       tabBarStore.updateTabList(route);
     }
   }, true);
 
   function tagClose(tag: ITagProps, idx: number) {
-    console.log("delete",tag,idx);
-    
+    console.log('delete', tag, idx);
+
     tabBarStore.deleteTag(idx, tag);
     if (idx === tagList.value.length) {
       const latest = tagList.value[tagList.value.length - 1];

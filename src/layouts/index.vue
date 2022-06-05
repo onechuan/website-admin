@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref } from 'vue';
+  import { computed } from 'vue';
   import { useAppStore } from '@/store';
   import Menu from './menu/index.vue';
   import Header from './header/index.vue';
