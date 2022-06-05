@@ -30,5 +30,4 @@ const useArticleStore = defineStore('article', {
   },
 });
 
-
 export default useArticleStore;
