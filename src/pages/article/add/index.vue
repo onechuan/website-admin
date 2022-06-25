@@ -1,6 +1,6 @@
 <template>
   <div class="editor-container">
-    <el-form ref="articleFormRef">
+    <el-form v-if="!isAddSuccess" ref="articleFormRef">
       <div class="editor-header">
         <input
           v-model="articleForm.title"
@@ -8,9 +8,7 @@
           type="text"
           placeholder="请输入你的文章标题 ..."
         />
-        <el-button type="primary" @click="handleDrawer"
-          >发布{{ articleForm.title }}</el-button
-        >
+        <el-button type="primary" @click="handleDrawer">发布</el-button>
       </div>
       <md-editor v-model="articleForm.content" class="editor" />
       <el-drawer v-model="drawer" title="发布文章" @close="handleCloseDrawer">
@@ -77,6 +75,16 @@
         </el-form-item>
       </el-drawer>
     </el-form>
+    <el-result
+      v-else
+      icon="success"
+      title="新增文章成功"
+      sub-title="可去文章列表查看详情"
+    >
+      <template #extra>
+        <el-button type="primary" @click="goto">前去查看</el-button>
+      </template>
+    </el-result>
   </div>
 </template>
 
@@ -84,6 +92,7 @@
   import { computed, reactive, ref } from 'vue';
   import MdEditor from 'md-editor-v3';
   import 'md-editor-v3/lib/style.css';
+  import { useRouter } from 'vue-router';
 
   import {
     ElMessage,
@@ -94,6 +103,7 @@
   import { Plus } from '@element-plus/icons-vue';
   import { fetchAddArticle } from '@/api/article';
 
+  const router = useRouter();
   const articleFormRef = ref();
 
   const tagList = [
@@ -143,8 +153,6 @@
     drawer.value = false;
   }
 
-  const imageUrl = ref('');
-
   const handleCoverSuccess: UploadProps['onSuccess'] = (
     response,
     uploadFile
@@ -161,7 +169,7 @@
     }
     return true;
   };
-
+  const isAddSuccess = ref(false);
   async function handleSubmit() {
     if (!articleForm.title.trim()) {
       ElMessage.error('文章标题不能为空！');
@@ -193,7 +201,13 @@
       author: '',
     };
     const res = await fetchAddArticle(addArticleParams);
-    ElMessage.success(res.data.msg);
+    ElMessage.success(res.msg);
+    handleCloseDrawer();
+    isAddSuccess.value = true;
+  }
+
+  function goto() {
+    router.push('/article/list');
   }
 </script>
 

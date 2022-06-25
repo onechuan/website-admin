@@ -9,8 +9,15 @@ export interface IArticle {
   category: string;
   createAt: string;
   updateAt: string;
+  isDel: boolean;
+  isPublish: boolean;
 }
 
 export interface IArticleState {
   articleList: IArticle[];
+  pageOptions: {
+    size: number;
+    total: number;
+    curPage: number;
+  };
 }

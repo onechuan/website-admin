@@ -24,7 +24,7 @@ export default {
     /** simple */
     {
       path: 'add',
-      name: 'add',
+      name: 'addArticle',
       component: () => import('@/pages/article/add/index.vue'),
       meta: {
         locale: 'menu.article.add',

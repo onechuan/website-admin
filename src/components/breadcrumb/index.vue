@@ -10,12 +10,11 @@
 </template>
 
 <script lang="ts" setup>
-
   interface IProps {
-    breadcrumbs:{
+    breadcrumbs: {
       name: string;
       path: string;
-    }[]
+    }[];
   }
   defineProps<IProps>();
 </script>

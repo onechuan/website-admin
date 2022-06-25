@@ -12,6 +12,11 @@ const useArticleStore = defineStore('article', {
   // 数据状态
   state: (): IArticleState => ({
     articleList: [],
+    pageOptions: {
+      size: 0,
+      total: 0,
+      curPage: 0,
+    },
   }),
   // 计算属性
   getters: {},
@@ -20,7 +25,14 @@ const useArticleStore = defineStore('article', {
     // 获取文章列表数据
     async getArticleList(params: IArticleListParams) {
       const res = await fetchArticleList(params);
-      this.articleList = res.data.articleList;
+      console.log('res', res);
+
+      const { articleList, size, total, curPage } = res.data;
+
+      this.articleList = articleList;
+      this.size = size;
+      this.total = total;
+      this.curPage = curPage;
     },
     // 新增文章
     async postArticleAdd(params: IAddArticleParams) {

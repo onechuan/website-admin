@@ -1,18 +1,38 @@
 export const tableHeadList = [
   {
-    label: 'Date',
-    width: 180,
-    prop: 'date',
+    label: '索引',
+    width: '',
+    prop: 'id',
   },
   {
-    label: 'Name',
-    width: 180,
-    prop: 'name',
+    label: '标题',
+    width: '',
+    prop: 'title',
   },
   {
-    label: 'Address',
-    width: 180,
-    prop: 'address',
+    label: '作者',
+    width: '',
+    prop: 'author',
+  },
+  {
+    label: '封面',
+    width: '',
+    prop: 'cover',
+  },
+  {
+    label: '简介',
+    width: '',
+    prop: 'desc',
+  },
+  {
+    label: '标签',
+    width: '',
+    prop: 'tags',
+  },
+  {
+    label: '分类',
+    width: '',
+    prop: 'category',
   },
 ];
 
